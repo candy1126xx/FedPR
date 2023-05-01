@@ -1,8 +1,4 @@
-
-from http import client
-import numpy as np
-import torch
-from torch.utils.data import DataLoader, Dataset
+from torch.utils.data import Dataset
 from torchvision import datasets, transforms
 from utils.sampling import pathological, pathological_lt, practical, practical_lt, from_json
 import os, json

@@ -1,6 +1,41 @@
 import numpy as np, random, torch, os, json
 
 
+def split_label(num_users, num_classes, n):
+    shard_per_class = int(n * num_users / num_classes)
+    classes_list = list(range(num_classes)) * shard_per_class
+    classes_list = np.array(classes_list).reshape((num_users, -1)).tolist()
+
+    i = 0
+    while i < 10000:# 0, 10000, 
+        u1 = random.randint(0, num_users-1)
+        u2 = random.randint(0, num_users-1)
+        if u1 == u2:
+            continue
+        u1_labels = classes_list[u1]
+        u2_labels = classes_list[u2]
+        ava_u1_l = []
+        for label in u1_labels:
+            if label not in u2_labels:
+                ava_u1_l.append(label)
+        if len(ava_u1_l)==0:
+            continue
+        ava_u2_l = []
+        for label in u2_labels:
+            if label not in u1_labels:
+                ava_u2_l.append(label)
+        if len(ava_u2_l)==0:
+            continue
+        u1_change = random.choice(ava_u1_l)
+        u2_change = random.choice(ava_u2_l)
+        u1_labels.remove(u1_change)
+        u1_labels.append(u2_change)
+        u2_labels.remove(u2_change)
+        u2_labels.append(u1_change)
+        i += 1
+
+    return classes_list
+
 def pathological(train_dataset, seed, num_classes, num_users, n):
     train_groups = {i: np.array([], dtype='int64') for i in range(num_users)}
     # {label: [id]}
@@ -20,9 +55,8 @@ def pathological(train_dataset, seed, num_classes, num_users, n):
         x = x.reshape(shard_per_class, -1)
         x = list(x)
         idxs_dict[label] = x
-    with open('split_user'+str(num_users)+'.json','r') as f:
-	    split_dic = json.load(f)
-    classes_list = split_dic[str(n)][seed]
+
+    classes_list = split_label(num_users, num_classes, n)
     # classes_list = [[0,1,2,3,4,5,6,7,8,9]]
     label_counts = torch.zeros(num_users, num_classes)
     #

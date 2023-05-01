@@ -80,7 +80,7 @@ if __name__ == "__main__":
     # 生成模型的学习率
     parser.add_argument("--generator_lr", type=float, default=0.001, help="Generator learning rate")
     # 1 次实验 进行 num_glob_iters 轮通信
-    parser.add_argument("--num_glob_iters", type=int, default=100)
+    parser.add_argument("--num_glob_iters", type=int, default=160)
     # 共有 num_users 个客户端
     parser.add_argument("--num_users", type=int, default=100, help="Number of Users")
     # 1 轮通信 选择 per_users 个客户端
