@@ -10,8 +10,11 @@ This code requires the following:
 ## Data Preparation
 * Download train and test datasets manually from the given links, or they will use the defalt links in torchvision.
 * Experiments are run on MNIST, Fashion MNIST, Federated Extended MNIST and CIFAR10.
+
 http://yann.lecun.com/exdb/mnist/
+
 https://s3.amazonaws.com/nist-srd/SD19/by_class.zip
+
 http://www.cs.toronto.edu/∼kriz/cifar.html
 
 ## Running the experiments
