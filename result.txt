@@ -1,3 +1,0 @@
-
-
-model: mnistcnn4, dataset: mnist, seed: 0, n: 3, algorithm: Local
